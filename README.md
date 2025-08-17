@@ -50,7 +50,7 @@ The project follows a structured machine learning pipeline:
 
 1.  **Clone the repository:**
     ```bash
-    git clone [your-repository-url]
+    git clone https://github.com/moeindoust/Titanic-Survival-Prediction.git
     cd Titanic-Survival-Prediction
     ```
 2.  **Install dependencies:**
