@@ -1,61 +1,99 @@
-# Titanic: Machine Learning from Disaster
+# پروژه پیش‌بینی زنده‌ماندن مسافران تایتانیک
 
-## 1. Project Overview
-
-This project presents a complete data science workflow to predict the survival of passengers aboard the RMS Titanic. Using the famous dataset from the Kaggle competition, we explore the data, engineer new features based on historical context, and build a predictive model to determine whether a passenger survived the tragedy.
-
-The primary goal is to create a robust classification model that achieves high accuracy and provides insights into the factors that influenced survival. This project serves as a demonstration of skills in data cleaning, feature engineering, model selection, and evaluation.
+## معرفی پروژه
+در این پروژه با استفاده از یادگیری ماشین، مدلی برای پیش‌بینی این که کدام مسافران کشتی تایتانیک توانستند از حادثه جان سالم به در ببرند، توسعه داده شده است. داده‌های مورد استفاده مربوط به اطلاعات واقعی مسافران تایتانیک است و این پروژه برای تمرین و آموزش مفاهیم علم داده و یادگیری ماشین بسیار مناسب می‌باشد.
 
 ---
 
-## 2. The Dataset
+## ویژگی‌های مجموعه داده
+مجموعه داده این پروژه شامل اطلاعات کامل مسافران کشتی تایتانیک است که معمولاً در فایل `train.csv` و `test.csv` از سایت Kaggle قابل دریافت است. از مهم‌ترین ویژگی‌های داده‌ها می‌توان به موارد زیر اشاره کرد:
 
-The dataset is split into two files: `train.csv` and `test.csv`.
-
-* **`train.csv`**: Contains data for a subset of passengers, including whether they survived (`Survived` column), which serves as our training data.
-* **`test.csv`**: Contains data for the remaining passengers, without the survival information. Our goal is to predict survival for these passengers.
-
-### Key Features:
-* **`Pclass`**: Ticket class (a proxy for socio-economic status).
-* **`Sex`**: Passenger's gender.
-* **`Age`**: Passenger's age in years.
-* **`SibSp`**: Number of siblings or spouses aboard.
-* **`Parch`**: Number of parents or children aboard.
-* **`Fare`**: The fare paid for the ticket.
-* **`Cabin`**: The passenger's cabin number.
-* **`Embarked`**: Port of embarkation (C = Cherbourg, Q = Queenstown, S = Southampton).
-
----
-
-## 3. Methodology
-
-The project follows a structured machine learning pipeline:
-
-1.  **Exploratory Data Analysis (EDA)**: Initial analysis to understand the data's structure, identify missing values, and uncover relationships between features and the survival outcome.
-2.  **Feature Engineering**: New features are created to enhance the model's predictive power. This includes:
-    * Extracting passenger **titles** (e.g., Mr., Mrs., Master) from names.
-    * Creating a **`FamilySize`** feature from `SibSp` and `Parch`.
-    * Categorizing `FamilySize` into groups like `Alone`, `Small_Family`, and `Large_Family`.
-    * Extracting the **`Deck`** from the `Cabin` number.
-3.  **Data Preprocessing**: The data is cleaned and prepared for modeling. This involves:
-    * **Imputing Missing Values**: Filling missing `Age`, `Fare`, and `Embarked` values using appropriate strategies (e.g., median imputation grouped by class and title).
-    * **Encoding Categorical Features**: Converting categorical variables like `Sex`, `Embarked`, `Title`, and `Deck` into a numerical format using one-hot encoding.
-4.  **Modeling**: An **XGBoost (Extreme Gradient Boosting)** classifier is chosen for its high performance and robustness. The model is trained on the entire training dataset.
-5.  **Prediction**: The trained model is used to predict survival outcomes for the passengers in the test dataset.
-6.  **Submission**: A `submission.csv` file is generated in the format required by the Kaggle competition.
+- **PassengerId:** شماره شناسایی مسافر  
+- **Survived:** متغیر هدف (0=نجات نیافته، 1=نجات یافته)  
+- **Pclass:** کلاس بلیط (1=لاکچری، 2=معمولی، 3=اقتصادی)  
+- **Name:** نام مسافر  
+- **Sex:** جنسیت  
+- **Age:** سن  
+- **SibSp:** تعداد خواهر/برادر یا همسر همراه  
+- **Parch:** تعداد والدین یا فرزند همراه  
+- **Ticket:** شماره بلیط  
+- **Fare:** مبلغ بلیط  
+- **Cabin:** شماره کابین  
+- **Embarked:** بندر سوار شدن (C = Cherbourg, Q = Queenstown, S = Southampton)  
 
 ---
 
-## 4. How to Run
+## مراحل انجام پروژه
 
-1.  **Clone the repository:**
-    ```bash
-    git clone https://github.com/moeindoust/Titanic-Survival-Prediction.git
-    cd Titanic-Survival-Prediction
-    ```
-2.  **Install dependencies:**
-    ```bash
-    pip install pandas numpy scikit-learn xgboost matplotlib seaborn
-    ```
-3.  **Place the data:** Download `train.csv` and `test.csv` from the [Kaggle Titanic Competition](https://www.kaggle.com/competitions/titanic/data) and place them in the root directory of the project.
-4.  **Run the Jupyter Notebook:** Open and run the `titanic_survival_prediction.ipynb` notebook to see the full analysis and generate the `submission.csv` file.
+### ۱. تحلیل اکتشافی داده‌ها (EDA)
+- تحلیل آماری ویژگی‌ها و شناسایی الگوهای تاثیرگذار در بقا
+- کشف داده‌های پرت و مقادیر گمشده
+- مصورسازی توزیع‌بندی متغیرها
+
+### ۲. پیش‌پردازش داده‌ها
+- مدیریت داده‌های گمشده (مثلاً میانگین سنی، حذف یا جایگزینی cabin و ...)
+- تبدیل متغیرهای طبقه‌ای به عددی (مانند جنسیت و بندر سوار شدن)
+- نرمال‌سازی ویژگی‌ها در صورت نیاز
+
+### ۳. مدل‌سازی و آموزش
+- انتخاب مدل‌های مختلف طبقه‌بندی (مانند Logistic Regression، Random Forest، SVM و ...)
+- آموزش مدل روی داده‌های آموزشی و اعتبارسنجی با Cross-Validation
+- بهینه‌سازی هایپرپارامترها
+
+### ۴. ارزیابی مدل
+- بررسی دقت مدل با معیارهایی مانند Accuracy، Precision، Recall و F1-Score
+- بررسی ماتریس خطا و تحلیل نتایج مدل
+
+### ۵. پیش‌بینی نمونه‌های جدید
+- استفاده از مدل آموزش‌دیده برای پیش‌بینی بقای مسافران داده تست
+
+---
+
+## راه‌اندازی و اجرا
+
+۱. مخزن را کلون کنید:
+```bash
+git clone https://github.com/moeindoust/Titanic-Survival-Prediction.git
+```
+
+۲. وارد پوشه پروژه شوید و پیش‌نیازها را نصب کنید:
+```bash
+cd Titanic-Survival-Prediction
+pip install -r requirements.txt
+```
+
+۳. فایل نوت‌بوک Jupyter را اجرا کنید:
+```bash
+jupyter notebook TSP.ipynb
+```
+
+---
+
+## پیش‌نیازها
+
+- Python 3.8+
+- کتابخانه‌های ضروری: pandas, numpy, scikit-learn, matplotlib, seaborn, jupyter و ...
+
+---
+
+## ساختار پوشه‌ها
+
+```
+├── data
+│   ├── train.csv            # داده‌های آموزش
+│   └── test.csv             # داده‌های تست
+├── model
+   ├── TSP.ipynb  # نوت‌بوک اصلی پروژه
+├── requirements.txt         # لیست پیش‌نیازهای پروژه
+├── README.md
+```
+
+---
+
+## مشارکت در پروژه
+برای مشارکت، لطفاً یک Fork از مخزن ایجاد کرده، تغییرات خود را اعمال و Pull Request ثبت کنید. برای گزارش مشکلات یا پیشنهادات از بخش Issues استفاده نمایید.
+
+
+
+**توسعه‌دهنده:**  
+[moeindoust](https://github.com/moeindoust)
